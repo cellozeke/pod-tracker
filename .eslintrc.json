@@ -2,5 +2,8 @@
   "extends": [
     "@veryable/eslint-config-veryable-frontend",
     "@veryable/eslint-config-veryable-frontend/next"
-  ]
+  ],
+  "rules": {
+    "import/no-default-export": "off"
+  }
 }
