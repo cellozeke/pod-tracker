@@ -120,7 +120,6 @@ const SignUpPage = () => {
                                     <IconButton
                                         aria-label='toggle password visibility'
                                         onClick={ () => setShowPassword( prev => !prev ) }
-                                        edge='end'
                                     >
                                         { showPassword ? <HidePasswordIcon /> : <ShowPasswordIcon /> }
                                     </IconButton>
