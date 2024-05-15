@@ -7,6 +7,7 @@ import {
     , TextField
     , Typography
 } from '@mui/material';
+import Link from 'next/link';
 
 // Utils
 import { pxrem } from '@/utils/pxrem';
@@ -54,6 +55,17 @@ export default function LoginPage () {
                     >
                         Log In With Google
                     </Button>
+                    <Typography
+                        textAlign='center'
+                        sx={ {
+                            '& a': {
+                                color: 'primary.main'
+                                , textDecoration: 'none'
+                            }
+                        } }
+                    >
+                        Don&apos;t have an account? <Link href='/sign-up'>Sign Up</Link>
+                    </Typography>
                 </Stack>
             </Paper>
         </Stack>
