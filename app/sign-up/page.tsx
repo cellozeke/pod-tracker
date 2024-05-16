@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-
 // Libs
+import { useState } from 'react';
 import {
     object
     , ref
@@ -34,7 +33,7 @@ import {
 // Utils
 import { pxrem } from '@/utils/pxrem';
 
-interface SignUpFormValues {
+interface SignupFormValues {
     username: string;
     email: string;
     password: string;
@@ -46,9 +45,9 @@ const signUpSchema = object().shape( {
     , email: string().email( 'Invalid email address' ).required( 'Email is required' )
     , password: string().min( 6, 'Password must be at least 6 characters' ).required( 'Password is required' )
     , confirmPassword: string().oneOf( [ ref( 'password' ), '' ], 'Passwords must match' ).required( 'Confirm password is required' )
-} ).required();
+} );
 
-const SignUpPage = () => {
+export default function SignUpPage() {
 
     const [ showPassword, setShowPassword ] = useState( false );
 
@@ -69,7 +68,7 @@ const SignUpPage = () => {
         , mode: 'onBlur'
     } );
 
-    const onSubmit: SubmitHandler<SignUpFormValues> = data => {
+    const onSubmit: SubmitHandler<SignupFormValues> = data => {
         console.log( data );
     };
 
@@ -83,89 +82,87 @@ const SignUpPage = () => {
             justifyContent='center'
         >
             <Paper>
-                <form onSubmit={ handleSubmit( onSubmit ) }>
-                    <Stack
-                        minWidth={ pxrem( 500 ) }
-                        gap={ pxrem( 24 ) }
-                        p={ pxrem( 42 ) }
+                <Stack
+                    minWidth={ pxrem( 500 ) }
+                    gap={ pxrem( 24 ) }
+                    p={ pxrem( 42 ) }
+                    component='form'
+                    onSubmit={ handleSubmit( onSubmit ) }
+                >
+                    <Typography
+                        variant='h3'
+                        textAlign='center'
                     >
-                        <Typography
-                            variant='h3'
-                            textAlign='center'
-                        >
-                            Sign Up
-                        </Typography>
-                        <TextField
-                            label='Username'
-                            placeholder='Enter your username'
-                            error={ !!errors.username }
-                            helperText={ errors.username?.message }
-                            { ...register( 'username' ) }
-                        />
-                        <TextField
-                            label='Email'
-                            placeholder='Enter your email address'
-                            error={ !!errors.email }
-                            helperText={ errors.email?.message }
-                            { ...register( 'email' ) }
-                        />
-                        <TextField
-                            label='Password'
-                            placeholder='Enter your password'
-                            error={ !!errors.password }
-                            helperText={ errors.password?.message }
-                            type={ showPassword ? 'text' : 'password' }
-                            InputProps={ {
-                                endAdornment: <InputAdornment position='end'>
-                                    <IconButton
-                                        aria-label='toggle password visibility'
-                                        onClick={ () => setShowPassword( prev => !prev ) }
-                                    >
-                                        { showPassword ? <HidePasswordIcon /> : <ShowPasswordIcon /> }
-                                    </IconButton>
-                                </InputAdornment>
-                            } }
-                            { ...register( 'password' ) }
-                        />
-                        <TextField
-                            label='Confirm Password'
-                            placeholder='Confirm your password'
-                            error={ !!errors.confirmPassword }
-                            helperText={ errors.confirmPassword?.message }
-                            { ...register( 'confirmPassword' ) }
-                        />
-                        <Button
-                            variant='contained'
-                            size='large'
-                            type='submit'
-                        >
-                            Sign Up
-                        </Button>
-                        <Divider sx={ { width: '100%' } }>
-                            OR
-                        </Divider>
-                        <Button
-                            variant='contained'
-                            size='large'
-                        >
-                            Sign Up With Google
-                        </Button>
-                        <Typography
-                            textAlign='center'
-                            sx={ {
-                                '& a': {
-                                    color: 'primary.main'
-                                    , textDecoration: 'none'
-                                }
-                            } }
-                        >
-                            Already have an account? <Link href='/login'>Log In</Link>
-                        </Typography>
-                    </Stack>
-                </form>
+                        Sign Up
+                    </Typography>
+                    <TextField
+                        label='Username'
+                        placeholder='Enter your username'
+                        error={ !!errors.username }
+                        helperText={ errors.username?.message }
+                        { ...register( 'username' ) }
+                    />
+                    <TextField
+                        label='Email'
+                        placeholder='Enter your email address'
+                        error={ !!errors.email }
+                        helperText={ errors.email?.message }
+                        { ...register( 'email' ) }
+                    />
+                    <TextField
+                        label='Password'
+                        placeholder='Enter your password'
+                        error={ !!errors.password }
+                        helperText={ errors.password?.message }
+                        type={ showPassword ? 'text' : 'password' }
+                        InputProps={ {
+                            endAdornment: <InputAdornment position='end'>
+                                <IconButton
+                                    aria-label='toggle password visibility'
+                                    onClick={ () => setShowPassword( prev => !prev ) }
+                                >
+                                    { showPassword ? <HidePasswordIcon /> : <ShowPasswordIcon /> }
+                                </IconButton>
+                            </InputAdornment>
+                        } }
+                        { ...register( 'password' ) }
+                    />
+                    <TextField
+                        label='Confirm Password'
+                        placeholder='Confirm your password'
+                        error={ !!errors.confirmPassword }
+                        helperText={ errors.confirmPassword?.message }
+                        { ...register( 'confirmPassword' ) }
+                    />
+                    <Button
+                        variant='contained'
+                        size='large'
+                        type='submit'
+                    >
+                        Sign Up
+                    </Button>
+                    <Divider sx={ { width: '100%' } }>
+                        OR
+                    </Divider>
+                    <Button
+                        variant='contained'
+                        size='large'
+                    >
+                        Sign Up With Google
+                    </Button>
+                    <Typography
+                        textAlign='center'
+                        sx={ {
+                            '& a': {
+                                color: 'primary.main'
+                                , textDecoration: 'none'
+                            }
+                        } }
+                    >
+                        Already have an account? <Link href='/login'>Log In</Link>
+                    </Typography>
+                </Stack>
             </Paper>
         </Stack>
     );
 };
-
-export default SignUpPage;
