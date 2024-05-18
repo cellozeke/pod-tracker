@@ -1,22 +1,20 @@
 'use client';
 
 // Libs
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
+import {
+    object
+    , ref
+    , string
+} from 'yup';
 import {
     SubmitHandler
     , useForm
 } from 'react-hook-form';
-import {
-    object
-    , string
-} from 'yup';
+import Link from 'next/link';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 // MUI
-import {
-    Visibility
-    , VisibilityOff
-} from '@mui/icons-material';
 import {
     Button
     , Divider
@@ -25,52 +23,61 @@ import {
     , Paper
     , Stack
     , TextField
-    , Tooltip
     , Typography
 } from '@mui/material';
-import Link from 'next/link';
+import {
+    Visibility as ShowPasswordIcon
+    , VisibilityOff as HidePasswordIcon
+} from '@mui/icons-material';
 
 // Utils
 import { pxrem } from '@/utils/pxrem';
 
-interface LoginFormInputs {
+interface SignupFormValues {
     username: string;
+    email: string;
     password: string;
+    confirmPassword: string;
 }
 
-const loginSchema = object().shape( {
+const signUpSchema = object().shape( {
     username: string().required( 'Username is required' )
-    , password: string().required( 'Password is required' )
+    , email: string().email( 'Invalid email address' ).required( 'Email is required' )
+    , password: string().min( 6, 'Password must be at least 6 characters' ).required( 'Password is required' )
+    , confirmPassword: string().oneOf( [ ref( 'password' ), '' ], 'Passwords must match' ).required( 'Confirm password is required' )
 } );
 
-export default function LoginPage () {
-    const [ showPassword, setShowPassword ] = useState<boolean>( false );
+export default function SignUpPage () {
+
+    const [ showPassword, setShowPassword ] = useState( false );
+
     const {
         register
         , handleSubmit
         , formState: {
             errors
-            , isDirty
         }
-    } = useForm<LoginFormInputs>( {
+    } = useForm( {
         defaultValues: {
             username: ''
+            , email: ''
             , password: ''
+            , confirmPassword: ''
         }
-        , resolver: yupResolver( loginSchema )
+        , resolver: yupResolver( signUpSchema )
         , mode: 'onBlur'
     } );
 
-    const toggleShowPassword = () => {
-        setShowPassword( !showPassword );
+    const onSubmit: SubmitHandler<SignupFormValues> = data => {
+        console.log( data );
     };
-
-    const onSubmit: SubmitHandler<LoginFormInputs> = data => console.log( { data } );
 
     return (
         <Stack
             width='100%'
-            height='100vh'
+            height='100%'
+            minHeight='100vh'
+            marginY={ pxrem( 24 ) }
             alignItems='center'
             justifyContent='center'
         >
@@ -86,7 +93,7 @@ export default function LoginPage () {
                         variant='h3'
                         textAlign='center'
                     >
-                        Log In
+                        Sign Up
                     </Typography>
                     <TextField
                         label='Username'
@@ -96,34 +103,43 @@ export default function LoginPage () {
                         { ...register( 'username' ) }
                     />
                     <TextField
+                        label='Email'
+                        placeholder='Enter your email address'
+                        error={ !!errors.email }
+                        helperText={ errors.email?.message }
+                        { ...register( 'email' ) }
+                    />
+                    <TextField
                         label='Password'
-                        type={ showPassword ? 'text' : 'password' }
                         placeholder='Enter your password'
                         error={ !!errors.password }
                         helperText={ errors.password?.message }
-                        { ...register( 'password' ) }
+                        type={ showPassword ? 'text' : 'password' }
                         InputProps={ {
-                            endAdornment: (
-                                <InputAdornment position='end'>
-                                    <Tooltip title={ showPassword ? 'Hide password' : 'Reveal password' }>
-                                        <IconButton
-                                            aria-label='Toggle password visibility'
-                                            onClick={ toggleShowPassword }
-                                        >
-                                            { showPassword ? <VisibilityOff /> : <Visibility /> }
-                                        </IconButton>
-                                    </Tooltip>
-                                </InputAdornment>
-                            )
+                            endAdornment: <InputAdornment position='end'>
+                                <IconButton
+                                    aria-label='toggle password visibility'
+                                    onClick={ () => setShowPassword( prev => !prev ) }
+                                >
+                                    { showPassword ? <HidePasswordIcon /> : <ShowPasswordIcon /> }
+                                </IconButton>
+                            </InputAdornment>
                         } }
+                        { ...register( 'password' ) }
+                    />
+                    <TextField
+                        label='Confirm Password'
+                        placeholder='Confirm your password'
+                        error={ !!errors.confirmPassword }
+                        helperText={ errors.confirmPassword?.message }
+                        { ...register( 'confirmPassword' ) }
                     />
                     <Button
                         variant='contained'
                         size='large'
                         type='submit'
-                        disabled={ !!Object.keys( errors ).length || !isDirty }
                     >
-                        Log In
+                        Sign Up
                     </Button>
                     <Divider sx={ { width: '100%' } }>
                         OR
@@ -132,7 +148,7 @@ export default function LoginPage () {
                         variant='contained'
                         size='large'
                     >
-                        Log In With Google
+                        Sign Up With Google
                     </Button>
                     <Typography
                         textAlign='center'
@@ -143,7 +159,7 @@ export default function LoginPage () {
                             }
                         } }
                     >
-                        Don&apos;t have an account? <Link href='/sign-up'>Sign Up</Link>
+                        Already have an account? <Link href='/login'>Log In</Link>
                     </Typography>
                 </Stack>
             </Paper>
