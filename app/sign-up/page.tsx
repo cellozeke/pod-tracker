@@ -47,7 +47,7 @@ const signUpSchema = object().shape( {
     , confirmPassword: string().oneOf( [ ref( 'password' ), '' ], 'Passwords must match' ).required( 'Confirm password is required' )
 } );
 
-export default function SignUpPage() {
+export default function SignUpPage () {
 
     const [ showPassword, setShowPassword ] = useState( false );
 
@@ -165,4 +165,4 @@ export default function SignUpPage() {
             </Paper>
         </Stack>
     );
-};
+}
