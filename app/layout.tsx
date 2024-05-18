@@ -3,12 +3,12 @@ import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 
 // MUI
+import { Box } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
-import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material';
 
 // Styles
 import { theme } from '@/theme';
-import { Box } from '@mui/material';
 
 // TODO: update metadata
 export const metadata: Metadata = {
