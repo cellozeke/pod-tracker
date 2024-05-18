@@ -14,8 +14,8 @@ import {
 
 // MUI
 import {
-    Visibility
-    , VisibilityOff
+    Visibility as ShowPasswordIcon
+    , VisibilityOff as HidePasswordIcon
 } from '@mui/icons-material';
 import {
     Button
@@ -50,7 +50,7 @@ export default function LoginPage () {
         , handleSubmit
         , formState: {
             errors
-            , isDirty
+            , isValid
         }
     } = useForm<LoginFormInputs>( {
         defaultValues: {
@@ -58,7 +58,7 @@ export default function LoginPage () {
             , password: ''
         }
         , resolver: yupResolver( loginSchema )
-        , mode: 'onBlur'
+        , mode: 'onChange'
     } );
 
     const toggleShowPassword = () => {
@@ -110,7 +110,7 @@ export default function LoginPage () {
                                             aria-label='Toggle password visibility'
                                             onClick={ toggleShowPassword }
                                         >
-                                            { showPassword ? <VisibilityOff /> : <Visibility /> }
+                                            { showPassword ? <ShowPasswordIcon /> : <HidePasswordIcon /> }
                                         </IconButton>
                                     </Tooltip>
                                 </InputAdornment>
@@ -121,12 +121,17 @@ export default function LoginPage () {
                         variant='contained'
                         size='large'
                         type='submit'
-                        disabled={ !!Object.keys( errors ).length || !isDirty }
+                        disabled={ !isValid }
                     >
                         Log In
                     </Button>
                     <Divider sx={ { width: '100%' } }>
-                        OR
+                        <Typography
+                            variant='body1'
+                            textAlign='center'
+                        >
+                            OR
+                        </Typography>
                     </Divider>
                     <Button
                         variant='contained'
