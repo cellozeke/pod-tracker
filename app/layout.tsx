@@ -3,9 +3,11 @@ import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 
 // MUI
-import { Box } from '@mui/material';
+import {
+    Box
+    , ThemeProvider
+} from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
-import { ThemeProvider } from '@mui/material';
 
 // Styles
 import { theme } from '@/theme';
