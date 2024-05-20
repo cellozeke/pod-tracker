@@ -32,23 +32,23 @@ import {
 
 // Utils
 import { pxrem } from '@/utils/pxrem';
+import { signup } from '../login/actions';
 
-interface SignupFormValues {
+export interface SignupFormValues {
     username: string;
     email: string;
     password: string;
     confirmPassword: string;
 }
 
-const signUpSchema = object().shape( {
+const signupSchema = object().shape( {
     username: string().required( 'Username is required' )
     , email: string().email( 'Invalid email address' ).required( 'Email is required' )
     , password: string().min( 6, 'Password must be at least 6 characters' ).required( 'Password is required' )
     , confirmPassword: string().oneOf( [ ref( 'password' ), '' ], 'Passwords must match' ).required( 'Confirm password is required' )
 } );
 
-export default function SignUpPage () {
-
+export default function SignupPage () {
     const [ showPassword, setShowPassword ] = useState( false );
 
     const {
@@ -64,12 +64,13 @@ export default function SignUpPage () {
             , password: ''
             , confirmPassword: ''
         }
-        , resolver: yupResolver( signUpSchema )
+        , resolver: yupResolver( signupSchema )
         , mode: 'onBlur'
     } );
 
     const onSubmit: SubmitHandler<SignupFormValues> = data => {
         console.log( data );
+        signup( data );
     };
 
     return (

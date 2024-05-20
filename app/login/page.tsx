@@ -32,8 +32,9 @@ import Link from 'next/link';
 
 // Utils
 import { pxrem } from '@/utils/pxrem';
+import { login } from './actions';
 
-interface LoginFormInputs {
+export interface LoginFormInputs {
     username: string;
     password: string;
 }
@@ -65,7 +66,10 @@ export default function LoginPage () {
         setShowPassword( !showPassword );
     };
 
-    const onSubmit: SubmitHandler<LoginFormInputs> = data => console.log( { data } );
+    const onSubmit: SubmitHandler<LoginFormInputs> = data => {
+        console.log( { data } );
+        login( data );
+    };
 
     return (
         <Stack

@@ -1,0 +1,47 @@
+'use server';
+
+import { createClient } from '@/utils/supabase/server';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+import { SignupFormValues } from '../signup/page';
+import { LoginFormInputs } from './page';
+
+export async function login ( loginData: LoginFormInputs ) {
+    const supabase = createClient();
+
+    // type-casting here for convenience
+    // in practice, you should validate your inputs
+    const data = {
+        email: loginData.username
+        , password: loginData.password
+    };
+
+    const { error } = await supabase.auth.signInWithPassword( data );
+
+    if ( error ) {
+        redirect( '/error' );
+    }
+
+    revalidatePath( '/', 'layout' );
+    redirect( '/private' );
+}
+
+export async function signup ( signupData: SignupFormValues ) {
+    const supabase = createClient();
+
+    // type-casting here for convenience
+    // in practice, you should validate your inputs
+    const data = {
+        email: signupData.email
+        , password: signupData.password
+    };
+
+    const { error } = await supabase.auth.signUp( data );
+
+    if ( error ) {
+        redirect( '/error' );
+    }
+
+    revalidatePath( '/', 'layout' );
+    redirect( '/' );
+}
