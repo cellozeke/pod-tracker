@@ -35,12 +35,12 @@ import { pxrem } from '@/utils/pxrem';
 import { login } from './actions';
 
 export interface LoginFormInputs {
-    username: string;
+    email: string;
     password: string;
 }
 
 const loginSchema = object().shape( {
-    username: string().required( 'Username is required' )
+    email: string().required( 'Email is required' )
     , password: string().required( 'Password is required' )
 } );
 
@@ -55,7 +55,7 @@ export default function LoginPage () {
         }
     } = useForm<LoginFormInputs>( {
         defaultValues: {
-            username: ''
+            email: ''
             , password: ''
         }
         , resolver: yupResolver( loginSchema )
@@ -93,11 +93,11 @@ export default function LoginPage () {
                         Log In
                     </Typography>
                     <TextField
-                        label='Username'
-                        placeholder='Enter your username'
-                        error={ !!errors.username }
-                        helperText={ errors.username?.message }
-                        { ...register( 'username' ) }
+                        label='Email'
+                        placeholder='Enter your email'
+                        error={ !!errors.email }
+                        helperText={ errors.email?.message }
+                        { ...register( 'email' ) }
                     />
                     <TextField
                         label='Password'
