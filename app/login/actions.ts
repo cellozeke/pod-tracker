@@ -12,7 +12,7 @@ export async function login ( loginData: LoginFormInputs ) {
     // type-casting here for convenience
     // in practice, you should validate your inputs
     const data = {
-        email: loginData.username
+        email: loginData.email
         , password: loginData.password
     };
 
