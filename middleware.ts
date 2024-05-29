@@ -1,5 +1,8 @@
-import { updateSession } from '@/utils/supabase/middleware';
+// Libs
 import { type NextRequest } from 'next/server';
+
+// Utils
+import { updateSession } from '@/utils/supabase/middleware';
 
 export async function middleware ( request: NextRequest ) {
     return await updateSession( request );

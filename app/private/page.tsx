@@ -1,5 +1,8 @@
-import { createClient } from '@/utils/supabase/server';
+// Libs
 import { redirect } from 'next/navigation';
+
+// Utils
+import { createClient } from '@/utils/supabase/server';
 
 export default async function PrivatePage () {
     const supabase = createClient();

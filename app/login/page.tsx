@@ -41,7 +41,7 @@ export interface LoginFormInputs {
 
 const loginSchema = object().shape( {
     email: string().required( 'Email is required' )
-    , password: string().required( 'Password is required' )
+    , password: string().required( 'Password is required' ).email( 'Invalid email address' )
 } );
 
 export default function LoginPage () {

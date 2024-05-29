@@ -1,10 +1,15 @@
 'use server';
 
-import { createClient } from '@/utils/supabase/server';
+// Libs
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+
+// Types
 import { SignupFormValues } from '../signup/page';
 import { LoginFormInputs } from './page';
+
+// Utils
+import { createClient } from '@/utils/supabase/server';
 
 export async function login ( loginData: LoginFormInputs ) {
     const supabase = createClient();

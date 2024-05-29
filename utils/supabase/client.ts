@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+
+// Libs
 import { createBrowserClient } from '@supabase/ssr';
 
 export function createClient () {
