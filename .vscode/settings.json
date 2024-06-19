@@ -3,4 +3,7 @@
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
     "eslint.format.enable": true,
+    "cSpell.words": [
+        "supabase"
+    ],
 }
