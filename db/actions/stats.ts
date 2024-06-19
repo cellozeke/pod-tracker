@@ -1,24 +1,20 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import {
-    db
-    , stats
-} from '..';
-import { eq } from 'drizzle-orm';
+import { supabase } from '..';
 
 export const getStats = async () => {
-    return await db.select().from( stats );
+    return await supabase.from( 'stats' ).select( '*' );
 };
 
 export const addStat = async ( name: string ) => {
-    const result = await db.insert( stats ).values( { name } );
+    const result = await supabase.from( 'stats' ).insert( { name } );
     revalidatePath( '/admin/stats' );
     return result;
 };
 
 export const deleteStat = async ( id: number ) => {
-    const result = await db.delete( stats ).where( eq( stats.id, id ) );
+    const result = await supabase.from( 'stats' ).delete().eq( 'id', id );
     revalidatePath( '/admin/stats' );
     return result;
 };
